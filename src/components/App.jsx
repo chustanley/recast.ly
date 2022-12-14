@@ -18,4 +18,7 @@ var App = () => (
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
+
+//With that said, we will have to use export Default the name of var
+//So that someone can 'import' this var into their JS file.
 export default App;
