@@ -1,15 +1,19 @@
 var VideoListEntry = (props) => {
+
+  //console.log('current: ', props.currentVideo);
+
   return (
     <div className="video-list-entry media">
       <div className="media-left media-middle">
         <img className="media-object" src={props.video.snippet.thumbnails.default.url} alt="" />
       </div>
       <div className="media-body">
-        <div className="video-list-entry-title">{props.video.snippet.title}</div>
+        <div className="video-list-entry-title" onClick={() => props.onClick(props.video)}>{props.video.snippet.title}</div>
         <div className="video-list-entry-detail">{props.video.snippet.description}</div>
       </div>
     </div>
   );
+  // console.log('State: ', props.currentVideo);
 };
 
 // PropTypes tell other developers what `props` a component expects
