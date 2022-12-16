@@ -1,13 +1,14 @@
 var VideoPlayer = (props) => {
-  var url = 'https://www.youtube.com/embed/' + props.args[1].id.videoId;
+  console.log(props.video);
+  var url = 'https://www.youtube.com/embed/' + props.video.id.videoId;
   return (
     <div className="video-player">
       <div className="embed-responsive embed-responsive-16by9">
         <iframe className="embed-responsive-item" src={url} allowFullScreen></iframe>
       </div>
       <div className="video-player-details">
-        <h3>{props.args[1].snippet.title}</h3>
-        <div>{props.args[1].snippet.description}</div>
+        <h3>{props.video.snippet.title}</h3>
+        <div>{props.video.snippet.description}</div>
       </div>
     </div>
   );

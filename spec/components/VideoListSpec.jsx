@@ -15,11 +15,13 @@ describe('VideoList', function() {
     var shallowRenderer = new ReactShallowRenderer();
 
     var oneFakeVideo = window.fakeVideoData.slice(-1);
+    console.log('Fake: ', oneFakeVideo);
     shallowRenderer.render(
       <VideoList videos={oneFakeVideo} />
     );
 
     var videoList = shallowRenderer.getRenderOutput();
+    console.log('Video List: ', videoList);
     expect(videoList.props.children).to.have.length(1);
     videoList.props.children.forEach(child => expect(child.type).to.equal(VideoListEntry));
   });
