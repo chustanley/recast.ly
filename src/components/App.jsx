@@ -2,49 +2,62 @@ import exampleVideoData from '../data/exampleVideoData.js';
 import VideoList from './VideoList.js';
 import VideoListEntry from './VideoListEntry.js';
 import VideoPlayer from './VideoPlayer.js';
+import searchYouTube from '../lib/searchYouTube.js';
+
 
 const { useState } = React;
+const { useEffect } = React;
 
-var stan = 'hi';
 
 
-var App = () => {
+var App = (props) => {
+
+
 
   const [videoList, setVideoList] = useState(exampleVideoData); //in the video list
   const [currentVideo, setCurrentVideo] = useState(exampleVideoData[0]);
-  //console.log('Current: ', currentVideo); //current video in player
-  //pass down states as props to child component
-  //use keys
-  //when click title of video in videoList, setCurrentVideo = true, old video set to false
 
 
-  ///////////////////////////////////////////////////////
-  //create function in app that calls for setCurrentVideo
-  //give it argument of selected video (onClick setCurrentVideo(props.video))
+  useEffect(() => {
+
+    // searchYouTube.get().then((data) => setVideoList(data));
+    // var firstVideo
+    searchYouTube('', (data) => {
+      console.log('this is data: ', data);
+      setVideoList(data);
+      setCurrentVideo(data[0]);
+
+    });
+  }, []);
+
+  // console.log(videoList);
+
+  // console.log('VideoList', videoList);
+  // console.log('HELLOOO', currentVideo);
 
 
-
-  console.log('VideoList', videoList);
-  console.log('HELLOOO', currentVideo);
-
-
-  return (
-    <div>
-      <nav className="navbar">
-        <div className="col-md-6 offset-md-3">
-          <div><h5><em>search</em> view goes here</h5></div>
-        </div>
-      </nav>
-      <div className="row">
-        <div className="col-md-7">
-          <VideoPlayer video={currentVideo} />
-        </div>
-        <div className="col-md-5">
-          <VideoList videos={exampleVideoData} currentVideo={currentVideo} onClick={setCurrentVideo} />
+  if (videoList.length !== 0) {
+    return (
+      <div>
+        <nav className="navbar">
+          <div className="col-md-6 offset-md-3">
+            <div><h5><em>search</em> view goes here</h5></div>
+          </div>
+        </nav>
+        <div className="row">
+          <div className="col-md-7">
+            <VideoPlayer video={currentVideo} />
+          </div>
+          <div className="col-md-5">
+            <VideoList videos={videoList} currentVideo={currentVideo} onClick={setCurrentVideo} />
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return null;
+  }
+
 };
 
 // In the ES6 spec, files are "modules" and do not share a top-level scope
