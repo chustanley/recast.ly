@@ -4,63 +4,50 @@ import VideoListEntry from './VideoListEntry.js';
 import VideoPlayer from './VideoPlayer.js';
 import searchYouTube from '../lib/searchYouTube.js';
 import Search from './Search.js';
-
-const { useState } = React;
-const { useEffect } = React;
+import fakeVideoData from '../../spec/data/fakeVideoData.js';
 
 
+var { useState } = React;
 
 var App = (props) => {
 
+  // console.log(props.searchYouTube);
+  const [videoList, setVideoList] = useState([]); //in the video list
+  const [currentVideo, setCurrentVideo] = useState(exampleVideoData[0]);
 
-  console.log(Window.fakeVideoData);
-  const [videoList, setVideoList] = useState(fakeVideoData); //in the video list
-  const [currentVideo, setCurrentVideo] = useState(fakeVideoData[0]);
-  // fake video data actaully makes the test fail lol - recastly doesnt load.
-  //we could make a fake object that has all the keys, but so when it checks for the keys, they are technically there
-  //BRUH WE JUST GOTTA USE ONCHANGE IN SEARCH FOR THE FORM, LIKE ONCLICK BUT ON CHANGE INSTEAD
- // LEMME SAVE IT LOL
+  const [count, setCount] = useState(0);
+
+  var timeout = null;
+  var query = '';
+
+
+  React.useEffect(() => {
+    // searchYouTube('', (data) => {
+    //   console.log('this is data: ', data);
+    //   setVideoList(data);
+    // });
+  }, [videoList, currentVideo]);
 
 
 
-  useEffect(() => {
-
-    // searchYouTube.get().then((data) => setVideoList(data));
-    // var firstVideo
-    searchYouTube('Cute cat video', (data) => {
-      console.log('this is data: ', data);
-      setVideoList(data);
-      setCurrentVideo(data[0]);
-
-    });
-  }, []);
-
-  // its throwing an error
-  // yeah so its saying that when theirs a change in form control class, then it will re render this func
-  //and therefore it would always be setting current video to data[0]
-
-  //it should be detecting changes in the value text that form control has and running everything in use effect when it sees changes
-  if (videoList.length !== 0) {
-    return (
-      <div>
-        <nav className="navbar">
-          <div className="col-md-6 offset-md-3">
-            <Search setVideoList={setVideoList} setCurrentVideo={setCurrentVideo} searchYouTube={searchYouTube} />
-          </div>
-        </nav>
-        <div className="row">
-          <div className="col-md-7">
-            <VideoPlayer video={currentVideo} />
-          </div>
-          <div className="col-md-5">
-            <VideoList videos={videoList} currentVideo={currentVideo} onClick={setCurrentVideo} />
-          </div>
+  return (
+    <div>
+      <div> { count } </div>
+      <nav className="navbar" onClick={() => setCount(count + 1)}>
+        <div className="col-md-6 offset-md-3">
+          <Search setVideoList={setVideoList} searchYouTube={searchYouTube} />
+        </div>
+      </nav>
+      <div className="row">
+        <div className="col-md-7">``
+          <VideoPlayer video={currentVideo} />
+        </div>
+        <div className="col-md-5">
+          <VideoList videos={videoList} setSelectedVideo={(v) => setCurrentVideo(v)} />
         </div>
       </div>
-    );
-  } else {
-    return null;
-  }
+    </div>
+  );
 
 };
 

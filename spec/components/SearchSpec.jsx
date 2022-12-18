@@ -23,8 +23,11 @@ describe ('Search', function() {
       );
     });
 
+
     it('should load live data when app is initialized', function() {
       var videoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
+      console.log(videoEntryTitleElements);
+
       videoEntryTitleElements.forEach((videoEntryTitle, i) => {
         expect(videoEntryTitle.innerHTML).to.equal(fakeVideoData[i].snippet.title);
       });
@@ -32,6 +35,8 @@ describe ('Search', function() {
 
     it('should update the video list when typing into the input box', function() {
       var videoEntryTitleElements = scryRenderedDOMComponentsWithClass(app, 'video-list-entry-title');
+      console.log(videoEntryTitleElements);
+
       videoEntryTitleElements.forEach((videoEntryTitle, i) => {
         expect(videoEntryTitle.innerHTML).to.equal(fakeVideoData[i].snippet.title);
       });

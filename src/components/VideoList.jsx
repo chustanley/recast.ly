@@ -1,18 +1,16 @@
 import VideoListEntry from './VideoListEntry.js';
 
-var VideoList = (props) => {
+var VideoList = (props) => (
 
-  console.log('Testing: ', props);
 
-  return (
-    <div className="video-list">
-      {props.videos.map((video) => (
-        <VideoListEntry video={video} key={video.id.videoId} currentVideo={props.currentVideo} onClick={props.onClick}/>
-      ))}
-    </div>
-  );
+  <div className="video-list">
+    {props.videos.map((video) => (
+      <VideoListEntry video={video} key={video.etag} setSelectedVideo={(v) => props.setSelectedVideo(v)} />
+    ))}
+  </div>
 
-};
+
+);
 
 
 // PropTypes tell other developers what `props` a component expects
